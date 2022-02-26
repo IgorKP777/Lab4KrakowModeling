@@ -94,7 +94,7 @@ if __name__ == '__main__':
         lam, mu, n, m = data(variant - 1)
         inputData = PrettyTable()
         inputData.field_names = ['вариант', 'lambda', 'mu', 'n', 'm']
-        inputData.add_row([str(variant), str(lam), str(mu), str(n), str(m)])
+        inputData.add_row([variant, lam, mu, n, m])
         inputData.align = 'c'
         print('исходные данные для варианта')
         print(inputData)
