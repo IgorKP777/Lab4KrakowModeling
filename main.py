@@ -1,4 +1,7 @@
 import math
+from prettytable import PrettyTable
+
+table = PrettyTable()
 
 
 def data(v):
@@ -23,13 +26,14 @@ def mmn0(lam, mu, n, m):
     q = lam * (1 - pOtk)
     nPod = m * (1 - pOtk)
     tC = nPod / lam
-    print('-----Случай M/M/n/0-----')
-    print('p(отк) = ', round(pOtk, 3), sep='')
-    print('Q = ', round(q, 3), sep='')
-    print('n(с чертой) = ', round(nPod, 3), sep='')
-    print('kn = ', round((nPod / n) * 100, 3), sep='')
-    print('tc = ', round(tC, 3), sep='')
-    print('Сумма вероятностей ', round(sum(pk), 3), sep='')
+    # print('-----Случай M/M/n/0-----')
+    # print('p(отк) = ', round(pOtk, 3), sep='')
+    # print('Q = ', round(q, 3), sep='')
+    # print('n(с чертой) = ', round(nPod, 3), sep='')
+    # print('kn = ', round((nPod / n) * 100, 3), sep='')
+    # print('tc = ', round(tC, 3), sep='')
+    table.add_row(['0', '', '', '', '', '', ''])
+    # print('Сумма вероятностей ', round(sum(pk), 3), sep='')
     print()
 
 
@@ -51,16 +55,17 @@ def mmn8(lam, mu, n, m):
     q = lam
     tOch = mPod / lam
     tc = NPod / lam
-    print('-----Случай M/M/n/8-----')
-    print('p(отк) =', '???')
-    print('Q =', round(q, 3))
-    print('nPod =', round(nPod, 3))
-    print('kn = ', round((nPod / n) * 100, 3), sep='')
-    print('tc =', round(tc, 3))
+    # print('-----Случай M/M/n/8-----')
+    # print('p(отк) =', '???')
+    # print('Q =', round(q, 3))
+    # print('nPod =', round(nPod, 3))
+    # print('kn = ', round((nPod / n) * 100, 3), sep='')
+    # print('tc =', round(tc, 3))
     # print('pOch =', round(pOch, 3))
     # print('mPod =', round(mPod, 3))
     # print('NPod =', round(NPod, 3))
     # print('tOch =', round(tOch, 3))
+    table.add_row(['бес', '', '', '', '', '', '--'])
     print()
 
 
@@ -89,17 +94,19 @@ def mmnm(lam, mu, n, m):
     NPod = nPod + mPod
     tOch = mPod / lam
     tc = NPod / lam
-    print('-----Случай M/M/n/m-----')
-    print('p(отк) =', round(pOtk, 3))
-    print('Q =', round(q, 3))
-    print('nPod =', round(nPod, 3))
-    print('kn = ', round((nPod / n) * 100, 3), sep='')
-    print('tc =', round(tc, 3))
-    print('Сумма вероятностей ', round(sum(pk), 3), sep='')
+    # print('-----Случай M/M/n/m-----')
+    # print('p(отк) =', round(pOtk, 3))
+    # print('Q =', round(q, 3))
+    # print('nPod =', round(nPod, 3))
+    # print('kn = ', round((nPod / n) * 100, 3), sep='')
+    # print('tc =', round(tc, 3))
+    table.add_row(['2', '', '', '', '', '', ''])
+    # print('Сумма вероятностей ', round(sum(pk), 3), sep='')
     pass
 
 
 if __name__ == '__main__':
+    table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум вер']
     try:
         variant = int(input('введите вариант '))
         # variant = 7
@@ -110,15 +117,28 @@ if __name__ == '__main__':
             exit(0)
 
         lam, mu, n, m = data(variant - 1)
-        print('вариант', variant)
-        print('lambda = ', lam, sep='')
-        print('mu = ', mu, sep='')
-        print('n = ', n, sep='')
-        print('m = ', m, sep='')
-        print()
+        inputData = PrettyTable()
+        inputData.field_names = ['вариант', 'lambda', 'mu', 'n', 'm']
+        inputData.add_row([str(variant), str(lam), str(mu), str(n), str(m)])
+        print(inputData)
+        # print('вариант', variant)
+        # print('lambda = ', lam, sep='')
+        # print('mu = ', mu, sep='')
+        # print('n = ', n, sep='')
+        # print('m = ', m, sep='')
+        # print()
         mmn0(2, 2, 2, 1)
-        mmn8(2, 2, 2, 1)
         mmnm(2, 2, 2, 1)
-
+        mmn8(2, 2, 2, 1)
+        print(table)
     except ValueError:
         print('введите число')
+
+    # table = PrettyTable()
+    # table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc']
+    # table.add_row(['0', '', '', '', '', ''])
+    # table.add_row(['2', '', '', '', '', ''])
+    # table.add_row(['бес', '', '', '', '', ''])
+    # table.align = 'c'
+    # print(table)
+    pass
