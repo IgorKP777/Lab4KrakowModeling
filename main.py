@@ -1,5 +1,6 @@
 import math
 from prettytable import PrettyTable
+from termcolor2 import c
 
 table = PrettyTable()
 
