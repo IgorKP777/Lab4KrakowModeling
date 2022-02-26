@@ -26,7 +26,8 @@ def mmn0(lam, mu, n, m):
     q = lam * (1 - pOtk)
     nPod = m * (1 - pOtk)
     tC = nPod / lam
-    table.add_row(['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3), round(sum(pk), 3)])
+    table.add_row(
+        ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3), round(sum(pk), 3)])
 
 
 def mmn8(lam, mu, n, m):
@@ -75,34 +76,39 @@ def mmnm(lam, mu, n, m):
     NPod = nPod + mPod
     tOch = mPod / lam
     tc = NPod / lam
-    table.add_row(['2', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), round(sum(pk), 3)])
+    table.add_row(
+        ['2', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), round(sum(pk), 3)])
     pass
 
 
 if __name__ == '__main__':
+
     table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум вер']
+
+    variant = int()
     try:
         # variant = int(input('введите вариант '))
         variant = 7
         print('ваш вариант', variant)
         print()
-
-        if not 1 <= variant <= 24:
-            print('введите номер варианта от 1 до 24')
-            exit(0)
-
-        lam, mu, n, m = data(variant - 1)
-        inputData = PrettyTable()
-        inputData.field_names = ['вариант', 'lambda', 'mu', 'n', 'm']
-        inputData.add_row([variant, lam, mu, n, m])
-        inputData.align = 'c'
-        print('исходные данные для варианта')
-        print(inputData)
-        print()
-        mmn0(2, 2, 2, 1)
-        mmnm(2, 2, 2, 1)
-        mmn8(2, 2, 2, 1)
-        print('таблица результатов')
-        print(table)
     except ValueError:
         print('введите число')
+        exit(-1)
+
+    if not 1 <= variant <= 24:
+        print('введите номер варианта от 1 до 24')
+        exit(-2)
+
+    lam, mu, n, m = data(variant - 1)
+    inputData = PrettyTable()
+    inputData.field_names = ['вариант', 'lambda', 'mu', 'n', 'm']
+    inputData.add_row([variant, lam, mu, n, m])
+    inputData.align = 'c'
+    print('исходные данные для варианта')
+    print(inputData)
+    print()
+    mmn0(2, 2, 2, 1)
+    mmnm(2, 2, 2, 1)
+    mmn8(2, 2, 2, 1)
+    print('таблица результатов')
+    print(table)
