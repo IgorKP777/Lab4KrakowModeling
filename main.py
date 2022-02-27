@@ -1,6 +1,6 @@
 import math
 from prettytable import PrettyTable
-from termcolor2 import c
+
 
 table = PrettyTable()
 
@@ -14,49 +14,52 @@ def data(v):
     return lambdaV[v], mu[v], n[v], m[v]
 
 
-def mmn0(lam, mu, n, m):
+def mmn0(lam, mu, n, alfa):
     s = n + 1
-    bk = [m]
+    bk = [alfa]
     for i in range(1, s):
-        bk.append(m / i * bk[i - 1])
+        bk.append(alfa / i * bk[i - 1])
     p0 = 1 / sum(bk)
     pk = [p0]
     for i in range(1, s):
         pk.append(bk[i] * p0)
-    pOtk = (m ** n) / math.factorial(n) * p0
+    pOtk = (alfa ** n) / math.factorial(n) * p0
     q = lam * (1 - pOtk)
-    nPod = m * (1 - pOtk)
+    nPod = alfa * (1 - pOtk)
     tC = nPod / lam
     table.add_row(
         ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3), round(sum(pk), 3)])
 
 
-def mmn8(lam, mu, n, m):
+def mmn8(lam, mu, n, alfa):
     sum = 0
     for i in range(1, n + 1):
-        sum += (m ** i) / math.factorial(i)
-    p0 = (1 + sum + (m ** (n + 1) / math.factorial(n) * (n - m))) ** -1
+        sum += (alfa ** i) / math.factorial(i)
+    p0 = (1 + sum + (alfa ** (n + 1) / math.factorial(n) * (n - alfa))) ** -1
     pk = [p0]
     for i in range(1, n + 1):
         pk.append(((m ** i) / math.factorial(i)) * p0)
     sum = 0
     for i in range(n):
         sum += pk[i]
-    nPod = m
+    nPod = alfa
     pOch = 1 - sum
-    mPod = (m * pOch) / (n + 1 - m)
+    mPod = (alfa * pOch) / (n + 1 - alfa)
     NPod = mPod + nPod
     q = lam
     tOch = mPod / lam
     tc = NPod / lam
-    table.add_row(['бес', '', round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
+    table.add_row(['бес', '???', round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
 
 
-def mmnm(lam, mu, n, m):
+def mmnm(lam, mu, n, m, alfa=1):
     s = n + m + 1
-    bk = [m]
-    for k in range(1, s):
-        bk.append(m / k * bk[k - 1])
+    bk = [float(alfa)]
+    for k in range(1, n):
+        bk.append(alfa / k * bk[k - 1])
+    for k in range(n, s):
+        bk.append(alfa / n * bk[k - 1])
+    print(bk)
     sum1 = 0
     for i in range(1, n + 1):
         sum1 += (m ** i) / math.factorial(i)
@@ -65,9 +68,24 @@ def mmnm(lam, mu, n, m):
         sum2 += (m / n) ** i
     p0 = (1 + sum1 + (m ** n / math.factorial(n)) * sum2) ** -1
     pk = [p0]
-    for i in range(1, s):
-        pk.append(bk[i] * p0)
-    # print(pk)
+    for k in range(1, len(bk)):
+        pk.append(bk[k] * p0)
+    print(pk)
+    # bk = [alfa]
+    # for k in range(1, s):
+    #     bk.append(alfa / k * bk[k - 1])
+    # sum1 = 0
+    # for i in range(1, n + 1):
+    #     sum1 += (m ** i) / math.factorial(i)
+    # sum2 = 0
+    # for i in range(1, m + 1):
+    #     sum2 += (m / n) ** i
+    # p0 = (1 + sum1 + (m ** n / math.factorial(n)) * sum2) ** -1
+    # pk = [p0]
+    # for i in range(1, s):
+    #     pk.append(bk[i] * p0)
+    # # print(pk)
+    #
     pOtk = ((m ** n) / math.factorial(n)) * ((m / n) ** m) * p0
     q = lam * (1 - pOtk)
     nPod = m * (1 - pOtk)
@@ -84,7 +102,7 @@ def mmnm(lam, mu, n, m):
 
 if __name__ == '__main__':
 
-    table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум вер']
+    table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
 
     variant = int()
     try:
