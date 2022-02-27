@@ -59,7 +59,6 @@ def mmnm(lam, mu, n, m, alfa=1):
         bk.append(alfa / k * bk[k - 1])
     for k in range(n, s):
         bk.append(alfa / n * bk[k - 1])
-    print(bk)
     sum1 = 0
     for i in range(1, n + 1):
         sum1 += (m ** i) / math.factorial(i)
@@ -70,7 +69,6 @@ def mmnm(lam, mu, n, m, alfa=1):
     pk = [p0]
     for k in range(1, len(bk)):
         pk.append(bk[k] * p0)
-    print(pk)
     # bk = [alfa]
     # for k in range(1, s):
     #     bk.append(alfa / k * bk[k - 1])
