@@ -1,7 +1,6 @@
 import math
 from prettytable import PrettyTable
 
-
 table = PrettyTable()
 
 
@@ -9,8 +8,8 @@ def data(v):
     lambdaV = [4.2, 4.4, 4.6, 4.8, 5.0, 5.2, 2.1, 2.2, 2.3, 2.4, 2.5, 2.6, 4.8, 5.0, 2.6, 5.3, 4.1, 2.2, 2.4, 2.5, 5.2,
                2.4, 5.1, 2.3]
     mu = [2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 2, 1, 2, 2, 1, 1, 1, 2, 1, 2, 1]
-    n = [3 for _ in range(24)]
-    m = [2 for _ in range(24)]
+    n = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]
+    m = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
     return lambdaV[v], mu[v], n[v], m[v]
 
 
@@ -31,25 +30,47 @@ def mmn0(lam, mu, n, alfa):
         ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3), round(sum(pk), 3)])
 
 
+# def mmn8(lam, mu, n, alfa):
+#     sum1 = 0
+#     for i in range(1, n):
+#         sum1 += (alfa ** i) / math.factorial(i)
+#     p0 = (1 + sum1 + ((alfa ** (n + 1)) / (math.factorial(n) * (n - alfa)))) ** -1
+#     pk = [p0]
+#     for i in range(1, n + 1):
+#         pk.append(((alfa ** i) / (math.factorial(i) * n ** (i - n))) * p0)
+#
+#     print(pk)
+#     sum2 = 0
+#     for i in range(n - 1):
+#         sum2 += pk[i]
+#     pOch = 1 - sum2
+#
+#     nPod = alfa
+#
+#     mPod = (alfa * pOch) / (n + 1 - alfa)
+#     NPod = mPod + nPod
+#     q = lam
+#     tOch = mPod / lam
+#     tc = NPod / lam
+#     table.add_row(['бес', round(pOch, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
+
 def mmn8(lam, mu, n, alfa):
-    sum = 0
-    for i in range(1, n + 1):
-        sum += (alfa ** i) / math.factorial(i)
-    p0 = (1 + sum + (alfa ** (n + 1) / math.factorial(n) * (n - alfa))) ** -1
+    sum1 = 0
+    for k in range(1, n + 1):
+        sum1 += ((alfa ** k) / math.factorial(k))
+    p0 = (1 + sum1 + ((alfa ** (n + 1)) / (math.factorial(n) * (n - 1)))) ** -1
     pk = [p0]
-    for i in range(1, n + 1):
-        pk.append(((m ** i) / math.factorial(i)) * p0)
-    sum = 0
-    for i in range(n):
-        sum += pk[i]
+    for k in range(1, n + 1):
+        pk.append(((alfa ** k) / math.factorial(k)) * p0)
     nPod = alfa
-    pOch = 1 - sum
-    mPod = (alfa * pOch) / (n + 1 - alfa)
-    NPod = mPod + nPod
+    pOch = 1 - sum(pk) + pk[-1]
+    mPod = (alfa * pOch) / (n / alfa)
+    NPod = nPod + mPod
     q = lam
     tOch = mPod / lam
     tc = NPod / lam
-    table.add_row(['бес', '???', round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
+    table.add_row(['\'бес\'', round(pOch, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
+    pass
 
 
 def mmnm(lam, mu, n, m, alfa=1):
@@ -124,6 +145,9 @@ if __name__ == '__main__':
     print('исходные данные для варианта')
     print(inputData)
     print()
+    # mmn0(lam, mu, n, m)
+    # mmnm(lam, mu, n, m)
+    # mmn8(lam, mu, n, m)
     mmn0(2, 2, 2, 1)
     mmnm(2, 2, 2, 1)
     mmn8(2, 2, 2, 1)
