@@ -1,12 +1,9 @@
-import math as math
 import openpyxl as xl
 from prettytable import PrettyTable as tablePr
+from mmn import MMN
 
 
-table = tablePr()
-
-
-def data(v):
+def data(v: int):
     book = xl.open(filename='table.xlsx', read_only=True)
     sheet = book.active
     lambdaV = []
@@ -21,82 +18,11 @@ def data(v):
     return lambdaV[v], mu[v], n[v], m[v]
 
 
-def mmn0(lam, mu, n, alfa):
-    s = n + 1
-    bk = [float(alfa)]
-    for i in range(1, s):
-        bk.append(alfa / i * bk[i - 1])
-    p0 = 1 / sum(bk)
-    pk = [p0]
-    for i in range(1, s):
-        pk.append(bk[i] * p0)
-    pOtk = (alfa ** n) / math.factorial(n) * p0
-    q = lam * (1 - pOtk)
-    nPod = alfa * (1 - pOtk)
-    tC = nPod / lam
-    table.add_row(
-        ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3), round(sum(pk), 3)])
-
-
-def mmn8(lam, mu, n, alfa):
-    sum1 = 0
-    for k in range(1, n + 1):
-        sum1 += ((alfa ** k) / math.factorial(k))
-    p0 = (1 + sum1 + ((alfa ** (n + 1)) / (math.factorial(n) * (n - 1)))) ** -1
-    pk = [p0]
-    for k in range(1, n + 1):
-        pk.append(((alfa ** k) / math.factorial(k)) * p0)
-    nPod = alfa
-    pOch = 1 - sum(pk) + pk[-1]
-    mPod = (alfa * pOch) / (n / alfa)
-    NPod = nPod + mPod
-    q = lam
-    tOch = mPod / lam
-    tc = NPod / lam
-    table.add_row(
-        ['∞', round(pOch, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
-    pass
-
-
-def mmnm(lam, mu, n, m, alfa=1):
-    s = n + m + 1
-    bk = [float(alfa)]
-    for k in range(1, n):
-        bk.append(alfa / k * bk[k - 1])
-    for k in range(n, s):
-        bk.append(alfa / n * bk[k - 1])
-    sum1 = 0
-    for i in range(1, n + 1):
-        sum1 += (m ** i) / math.factorial(i)
-    sum2 = 0
-    for i in range(1, m + 1):
-        sum2 += (m / n) ** i
-    p0 = (1 + sum1 + (m ** n / math.factorial(n)) * sum2) ** -1
-    pk = [p0]
-    for k in range(1, len(bk)):
-        pk.append(bk[k] * p0)
-    pOtk = ((m ** n) / math.factorial(n)) * ((m / n) ** m) * p0
-    q = lam * (1 - pOtk)
-    nPod = m * (1 - pOtk)
-    mPod = 0
-    for s in range(1, m + 1):
-        mPod += s * (((m ** n) / math.factorial(n)) * ((m / n) ** s) * p0)
-    NPod = nPod + mPod
-    tOch = mPod / lam
-    tc = NPod / lam
-    table.add_row(
-        ['2', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), round(sum(pk), 3)])
-    pass
-
-
 if __name__ == '__main__':
-
-    table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
 
     variant = int()
     try:
-        # variant = int(input('введите вариант '))
-        variant = 7
+        variant = int(input('введите вариант '))
         print('ваш вариант', variant)
         print()
     except ValueError:
@@ -115,11 +41,12 @@ if __name__ == '__main__':
     print('исходные данные для варианта')
     print(inputData)
     print()
-    mmn0(lam, mu, n, m)
-    mmnm(lam, mu, n, m)
-    mmn8(lam, mu, n, m)
-    # mmn0(2, 2, 2, 1)
-    # mmnm(2, 2, 2, 1)
-    # mmn8(2, 2, 2, 1)
+    models = MMN()
+    models.mmn0(lam=lam, mu=mu, n=n, alfa=m)
+    models.mmnm(lam, mu, n, m)
+    models.mmn8(lam=lam, mu=mu, n=n, alfa=m)
+    # models.mmn0(2, 2, 2, 1)
+    # models.mmnm(2, 2, 2, 1)
+    # models.mmn8(2, 2, 2, 1)
     print('таблица результатов')
-    print(table)
+    print(models.tableResult())
