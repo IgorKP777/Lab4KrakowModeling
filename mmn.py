@@ -3,6 +3,7 @@ from prettytable import PrettyTable as tablePr
 
 table = tablePr()
 table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
+table.title = 'таблица результатов'
 
 
 class MMN:
@@ -10,6 +11,7 @@ class MMN:
     def __init__(self):
         pass
 
+    # модель MMN0
     def mmn0(self, lam, mu, n, alfa) -> None:
         s = n + 1
         bk = [float(alfa)]
@@ -27,6 +29,7 @@ class MMN:
             ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3),
              round(sum(pk), 3)])
 
+    # модель MMNM
     def mmnm(self, lam, mu, n, m, alfa=1) -> None:
         s = n + m + 1
         bk = [float(alfa)]
@@ -57,6 +60,7 @@ class MMN:
             ['2', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3),
              round(sum(pk), 3)])
 
+    # модель MMN∞
     def mmn8(self, lam, mu, n, alfa) -> None:
         sum1 = 0
         for k in range(1, n + 1):
