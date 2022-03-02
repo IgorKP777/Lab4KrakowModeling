@@ -10,7 +10,7 @@ def data(v: int):
     mu = []
     n = []
     m = []
-    for row in range(2, sheet.max_row):
+    for row in range(2, sheet.max_row + 1):
         lambdaV.append(sheet[row][1].value)
         mu.append(sheet[row][2].value)
         n.append(sheet[row][3].value)
