@@ -3,7 +3,7 @@ from prettytable import PrettyTable as tablePr
 from mmn import MMN
 
 
-# получаем данные для варианта из таблицы xlsx
+# получаем данные для варианта из файла xlsx
 def data(v: int):
     book = xl.open(filename='table.xlsx', read_only=True)
     sheet = book.active
@@ -24,7 +24,6 @@ if __name__ == '__main__':
     variant = int()
     try:
         variant = int(input('введите вариант '))
-        print('ваш вариант', variant)
         print()
     except ValueError:
         print('введите число')
@@ -37,15 +36,16 @@ if __name__ == '__main__':
 
     lam, mu, n, m = data(variant - 1)
     inputData = tablePr()
+    inputData.title = 'исходные данные для варианта'
     inputData.field_names = ['вариант', 'lambda', 'mu', 'n', 'm']
     inputData.add_row(row=[variant, lam, mu, n, m])
     inputData.align = 'c'
-    inputData.title = 'исходные данные для варианта'
+    inputData.encoding = 'utf-8'
     print(inputData)
     print()
     # вызов трех моделей и вывод в консоль
     models = MMN()
     models.mmn0(lam=lam, mu=mu, n=n, alfa=m)
-    models.mmnm(lam, mu, n, m)
+    models.mmnm(lam=lam, mu=mu, n=n, m=m)
     models.mmn8(lam=lam, mu=mu, n=n, alfa=m)
     print(models.tableResult())

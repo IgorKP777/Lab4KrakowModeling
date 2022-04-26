@@ -2,14 +2,14 @@ import math
 from prettytable import PrettyTable as tablePr
 
 table = tablePr()
-table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
 table.title = 'таблица результатов'
+table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
+table.align = 'c'
+table.float_format = '.3'
+table.encoding = 'utf-8'
 
 
 class MMN:
-
-    def __init__(self):
-        pass
 
     # модель MMN0
     def mmn0(self, lam, mu, n, alfa) -> None:
@@ -25,9 +25,7 @@ class MMN:
         q = lam * (1 - pOtk)
         nPod = alfa * (1 - pOtk)
         tC = nPod / lam
-        table.add_row(
-            ['0', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tC, 3),
-             round(sum(pk), 3)])
+        table.add_row(['0', pOtk, q, nPod, (nPod / n) * 100, tC, sum(pk)])
 
     # модель MMNM
     def mmnm(self, lam, mu, n, m, alfa=1) -> None:
@@ -56,9 +54,7 @@ class MMN:
         NPod = nPod + mPod
         tOch = mPod / lam
         tc = NPod / lam
-        table.add_row(
-            ['2', round(pOtk, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3),
-             round(sum(pk), 3)])
+        table.add_row(['2', pOtk, q, nPod, (nPod / n) * 100, tc, sum(pk)])
 
     # модель MMN∞
     def mmn8(self, lam, mu, n, alfa) -> None:
@@ -76,8 +72,7 @@ class MMN:
         q = lam
         tOch = mPod / lam
         tc = NPod / lam
-        table.add_row(
-            ['∞', round(pOch, 3), round(q, 3), round(nPod, 3), round((nPod / n) * 100, 3), round(tc, 3), '---'])
+        table.add_row(['∞', pOch, q, nPod, (nPod / n) * 100, tc, '---'])
 
     def tableResult(self) -> tablePr:
         return table
