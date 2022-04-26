@@ -46,6 +46,9 @@ if __name__ == '__main__':
     # вызов трех моделей и вывод в консоль
     models = MMN()
     models.mmn0(lam=lam, mu=mu, n=n, alfa=m)
+    # models.mmn0(lam=2, mu=2, n=2, alfa=1)
     models.mmnm(lam=lam, mu=mu, n=n, m=m)
+    # models.mmnm(lam=2, mu=2, n=2, alfa=1)
     models.mmn8(lam=lam, mu=mu, n=n, alfa=m)
+    # models.mmn8(lam=2, mu=2, n=2, alfa=1)
     print(models.tableResult())
