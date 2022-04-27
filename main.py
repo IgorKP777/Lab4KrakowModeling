@@ -19,8 +19,8 @@ def data(v: int):
     return lambdaV[v], mu[v], n[v], m[v]
 
 
-if __name__ == '__main__':
-
+while 1:
+    # запрос варианта от пользователя
     variant = int()
     try:
         variant = int(input('введите вариант '))
@@ -43,12 +43,10 @@ if __name__ == '__main__':
     inputData.encoding = 'utf-8'
     print(inputData)
     print()
-    # вызов трех моделей и вывод в консоль
+    # вызов трех моделей и вывод в консоль в виде таблицы
     models = MMN()
-    models.mmn0(lam=lam, mu=mu, n=n, alfa=m)
-    # models.mmn0(lam=2, mu=2, n=2, alfa=1)
-    models.mmnm(lam=lam, mu=mu, n=n, m=m)
-    # models.mmnm(lam=2, mu=2, n=2, alfa=1)
-    models.mmn8(lam=lam, mu=mu, n=n, alfa=m)
-    # models.mmn8(lam=2, mu=2, n=2, alfa=1)
+    # models.mmn0(lam=lam, mu=mu, n=n, m=m)
+    # models.mmnm(lam=lam, mu=mu, n=n, m=m)
+    # models.mmn8(lam=lam, mu=mu, n=n, m=m)
+    models.mmn8(lam=2, mu=2, n=2, m=1)
     print(models.tableResult())
