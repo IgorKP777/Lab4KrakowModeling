@@ -5,6 +5,7 @@ from mmn import MMN
 
 # получаем данные для варианта из файла xlsx
 def data(v: int):
+    """получение данных из файла xlsx"""
     book = xl.open(filename='table.xlsx', read_only=True)
     sheet = book.active
     lambdaV = []
