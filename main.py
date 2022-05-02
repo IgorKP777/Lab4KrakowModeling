@@ -1,5 +1,4 @@
 import openpyxl as xl
-from prettytable import PrettyTable as tablePr
 from mmn import *
 
 
@@ -44,7 +43,7 @@ if input_variant.isnumeric():
     variant = int(input_variant)
 else:
     print('введите число')
-    exit(-1)
+    exit(code=-1)
 # проверка на номер варианта от 1 до 24
 if not 1 <= variant <= 24:
     print('введите номер варианта от 1 до 24')
