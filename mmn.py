@@ -9,18 +9,13 @@ table.float_format = '.3'
 table.encoding = 'utf-8'
 
 
-# модель MMN0
 def mmn0(lam, mu, n, m) -> None:
     """модель MMN0"""
     alfa = lam / mu
-    summa = float()
-    for k in range(1, n + 1):
-        a = (alfa ** k) / math.factorial(k)
-        summa += a
+    summa = sum([(alfa ** k) / math.factorial(k) for k in range(1, n + 1)])
     p0 = (1 + summa) ** -1
-    p = [p0]
-    for k in range(1, n + 1):
-        p.append((alfa ** k) / math.factorial(k) * p0)
+    p = [(alfa ** k) / math.factorial(k) * p0 for k in range(1, n + 1)]
+    p.insert(0, p0)
     p_otk = p[n]
     q = lam * (1 - p_otk)
     n_pod = alfa * (1 - p_otk)
@@ -28,16 +23,11 @@ def mmn0(lam, mu, n, m) -> None:
     table.add_row(['0', p_otk, q, n_pod, (n_pod / n) * 100, t_c, sum(p)])
 
 
-# модель MMNM
 def mmnm(lam, mu, n, m) -> None:
     """модель MMNM"""
     alfa = lam / mu
-    summa1 = float()
-    for k in range(1, n + 1):
-        summa1 += (alfa ** k) / math.factorial(k)
-    summa2 = float()
-    for s in range(1, m + 1):
-        summa2 += (alfa / n) ** s
+    summa1 = sum([(alfa ** k) / math.factorial(k) for k in range(1, n + 1)])
+    summa2 = sum([(alfa / n) ** s for s in range(1, m + 1)])
     p0 = (1 + summa1 + (alfa ** n) / math.factorial(n) * summa2) ** -1
     p = [p0]
     for k in range(1, n + 1):
@@ -47,21 +37,16 @@ def mmnm(lam, mu, n, m) -> None:
     p_otk = p[n + m]
     q = lam * (1 - p_otk)
     n_pod = alfa * (1 - p_otk)
-    m_pod = float()
-    for s in range(1, m + 1):
-        m_pod += s * p[n + s]
+    m_pod = sum([s * p[n + s] for s in range(1, m + 1)])
     n_big = n_pod + m_pod
     t_c = n_big / lam
     table.add_row(['2', p_otk, q, n_pod, (n_pod / n) * 100, t_c, sum(p)])
 
 
-# модель MMN∞
 def mmn8(lam, mu, n, m) -> None:
     """модель MMN∞"""
     alfa = lam / mu
-    summa1 = float()
-    for k in range(1, n + 1):
-        summa1 += (alfa ** k) / math.factorial(k)
+    summa1 = sum([(alfa ** k) / math.factorial(k) for k in range(1, n + 1)])
     p0 = (1 + summa1 + ((alfa ** (n + 1)) / (math.factorial(n) * (n - alfa)))) ** -1
     p = [p0]
     for k in range(1, n + 1):

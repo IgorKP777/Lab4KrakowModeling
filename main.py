@@ -2,9 +2,15 @@ import openpyxl as xl
 from mmn import *
 
 
-# получаем данные для варианта из файла xlsx
-def data(v: int):
-    """получение данных из файла xlsx"""
+def data(v: int) -> tuple[float, int, int, int]:
+    """
+    Получение данных из файла xlsx, путем парсинга через библиотеку openpyxl.
+    Возвращает:
+    lam: float,
+    mu: int,
+    n: int,
+    m: int
+    """
     book = xl.open(filename='table.xlsx', read_only=True)
     sheet = book.active
     lambdaV = []
@@ -39,15 +45,19 @@ def table_designations() -> tablePr:
 # запрос варианта от пользователя
 input_variant = input('введите номер варианта ')
 variant = int()
+
+# проверка на число
 if input_variant.isnumeric():
     variant = int(input_variant)
 else:
     print('введите число')
     exit(code=-1)
+
 # проверка на номер варианта от 1 до 24
 if not 1 <= variant <= 24:
     print('введите номер варианта от 1 до 24')
     exit(-2)
+
 lam, mu, n, m = data(variant - 1)
 inputData = tablePr()
 inputData.title = 'исходные данные для варианта'.upper()
@@ -57,9 +67,15 @@ inputData.align = 'c'
 inputData.encoding = 'utf-8'
 print(inputData)
 print()
+
 # вызов трех моделей и вывод в консоль в виде таблицы
 mmn0(lam=lam, mu=mu, n=n, m=m)
 mmnm(lam=lam, mu=mu, n=n, m=m)
 mmn8(lam=lam, mu=mu, n=n, m=m)
+
 print(table_designations(), '\n')
 print(tableResult())
+
+del inputData
+del table_designations
+del tableResult
