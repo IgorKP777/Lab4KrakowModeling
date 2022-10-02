@@ -44,7 +44,7 @@ def table_designations() -> tablePr:
 
 # запрос варианта от пользователя
 input_variant = input('введите номер варианта ')
-variant = int()
+variant = 0
 
 # проверка на число
 if input_variant.isnumeric():
