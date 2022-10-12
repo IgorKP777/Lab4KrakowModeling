@@ -54,9 +54,32 @@ else:
     exit(code=-1)
 
 # проверка на номер варианта от 1 до 24
-if not 1 <= variant <= 24:
-    print('введите номер варианта от 1 до 24')
-    exit(-2)
+# if not 0 <= variant <= 24:
+#     print('введите номер варианта от 1 до 24')
+#     exit(-2)
+
+if variant == 0:
+    lt_var = [i for i in range(1, 25)]
+    for var in lt_var:
+        lam, mu, n, m = data(var)
+        inputData = tablePr()
+        inputData.title = 'исходные данные для варианта'.upper()
+        inputData.field_names = ['вар.', 'λ', 'μ', 'n', 'm']
+        inputData.add_row(row=[var, lam, mu, n, m])
+        inputData.align = 'c'
+        inputData.encoding = 'utf-8'
+        print(inputData)
+        print()
+
+        # вызов трех моделей и вывод в консоль в виде таблицы
+        mmn0(lam=lam, mu=mu, n=n, m=m)
+        mmnm(lam=lam, mu=mu, n=n, m=m)
+        mmn8(lam=lam, mu=mu, n=n, m=m)
+
+        print(table_designations(), '\n')
+        print(tableResult())
+        table_clear()
+    exit(2)
 
 lam, mu, n, m = data(variant - 1)
 inputData = tablePr()
@@ -75,7 +98,3 @@ mmn8(lam=lam, mu=mu, n=n, m=m)
 
 print(table_designations(), '\n')
 print(tableResult())
-
-del inputData
-del table_designations
-del tableResult

@@ -65,3 +65,7 @@ def mmn8(lam, mu, n, m) -> None:
 
 def tableResult() -> tablePr:
     return table
+
+
+def table_clear():
+    table.clear()
