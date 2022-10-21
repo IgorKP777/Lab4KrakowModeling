@@ -1,13 +1,6 @@
 import math
 from prettytable import PrettyTable as tablePr
 
-# table = tablePr()
-# table.title = 'таблица результатов'.upper()
-# table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
-# table.align = 'c'
-# table.float_format = '.3'
-# table.encoding = 'utf-8'
-
 
 class MMN:
 

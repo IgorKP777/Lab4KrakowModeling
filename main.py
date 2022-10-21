@@ -77,11 +77,6 @@ if variant == 0:
         mmn.mmnm()
         mmn.mmn8()
 
-        # вызов трех моделей и вывод в консоль в виде таблицы
-        # mmn0(lam=lam, mu=mu, n=n, m=m)
-        # mmnm(lam=lam, mu=mu, n=n, m=m)
-        # mmn8(lam=lam, mu=mu, n=n, m=m)
-
         print(table_designations(), '\n')
         print(mmn.tableResult())
     exit(2)
