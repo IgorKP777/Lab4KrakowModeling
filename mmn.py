@@ -1,12 +1,12 @@
 import math
 from prettytable import PrettyTable as tablePr
 
-table = tablePr()
-table.title = 'таблица результатов'.upper()
-table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
-table.align = 'c'
-table.float_format = '.3'
-table.encoding = 'utf-8'
+# table = tablePr()
+# table.title = 'таблица результатов'.upper()
+# table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
+# table.align = 'c'
+# table.float_format = '.3'
+# table.encoding = 'utf-8'
 
 
 class MMN:
@@ -15,12 +15,19 @@ class MMN:
     mu = 0
     n = 0
     m = 0
+    table = tablePr()
 
     def __init__(self, lam: float, mu: int, n: int, m: int):
         self.lam = lam
         self.mu = mu
         self.n = n
         self.m = m
+        self.table = tablePr()
+        self.table.title = 'таблица результатов'.upper()
+        self.table.field_names = ['m', 'p(отк)', 'Q', 'n', 'kn', 'tc', 'сум. вер.']
+        self.table.align = 'c'
+        self.table.float_format = '.3'
+        self.table.encoding = 'utf-8'
 
     def mmn0(self) -> None:
         """модель MMN0"""
@@ -33,7 +40,7 @@ class MMN:
         q = self.lam * (1 - p_otk)
         n_pod = alfa * (1 - p_otk)
         t_c = n_pod / self.lam
-        table.add_row(['0', p_otk, q, n_pod, (n_pod / self.n) * 100, t_c, sum(p)])
+        self.table.add_row(['0', p_otk, q, n_pod, (n_pod / self.n) * 100, t_c, sum(p)])
 
     def mmnm(self) -> None:
         """модель MMNM"""
@@ -52,7 +59,7 @@ class MMN:
         m_pod = sum([s * p[self.n + s] for s in range(1, self.m + 1)])
         n_big = n_pod + m_pod
         t_c = n_big / self.lam
-        table.add_row(['2', p_otk, q, n_pod, (n_pod / self.n) * 100, t_c, sum(p)])
+        self.table.add_row(['2', p_otk, q, n_pod, (n_pod / self.n) * 100, t_c, sum(p)])
 
     def mmn8(self) -> None:
         """модель MMN∞"""
@@ -65,13 +72,13 @@ class MMN:
         for k in range(self.n + 1, self.n + 3):
             p.append((alfa ** k) / (math.factorial(self.n) * self.n ** (k - self.n)) * p0)
         p_och = 1 - sum(p[:-1])
-        n_pod = self.m
+        n_pod = alfa
         q = self.lam
         m_pod = (self.m * p_och) / (self.n - self.m)
         n_big = n_pod + m_pod
         t_c = n_big / self.lam
         t_och = m_pod / self.lam
-        table.add_row(['∞', 'p(оч) ' + str(round(p_och, 3)), q, n_pod, (n_pod / self.n) * 100, t_c, '---'])
+        self.table.add_row(['∞', 'p(оч) ' + str(round(p_och, 3)), q, n_pod, (n_pod / self.n) * 100, t_c, '---'])
 
     def tableResult(self) -> tablePr:
-        return table
+        return self.table

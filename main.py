@@ -60,7 +60,7 @@ if not 0 <= variant <= 24:
     exit(-2)
 
 if variant == 0:
-    lt_var = [i for i in range(1, 25)]
+    lt_var = [i for i in range(1, 24)]
     for var in lt_var:
         lam, mu, n, m = data(var)
         inputData = tablePr()
