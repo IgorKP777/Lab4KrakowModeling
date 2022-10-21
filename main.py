@@ -1,5 +1,6 @@
 import openpyxl as xl
-from mmn import *
+from prettytable import PrettyTable as tablePr
+from mmn import MMN
 
 
 def data(v: int) -> tuple[float, int, int, int]:
@@ -71,13 +72,18 @@ if variant == 0:
         print(inputData)
         print()
 
+        mmn = MMN(lam=lam, mu=mu, n=n, m=m)
+        mmn.mmn0()
+        mmn.mmnm()
+        mmn.mmn8()
+
         # вызов трех моделей и вывод в консоль в виде таблицы
-        mmn0(lam=lam, mu=mu, n=n, m=m)
-        mmnm(lam=lam, mu=mu, n=n, m=m)
-        mmn8(lam=lam, mu=mu, n=n, m=m)
+        # mmn0(lam=lam, mu=mu, n=n, m=m)
+        # mmnm(lam=lam, mu=mu, n=n, m=m)
+        # mmn8(lam=lam, mu=mu, n=n, m=m)
 
         print(table_designations(), '\n')
-        print(tableResult())
+        print(mmn.tableResult())
     exit(2)
 
 lam, mu, n, m = data(variant - 1)
@@ -91,9 +97,10 @@ print(inputData)
 print()
 
 # вызов трех моделей и вывод в консоль в виде таблицы
-mmn0(lam=lam, mu=mu, n=n, m=m)
-mmnm(lam=lam, mu=mu, n=n, m=m)
-mmn8(lam=lam, mu=mu, n=n, m=m)
+mmn = MMN(lam=lam, mu=mu, n=n, m=m)
+mmn.mmn0()
+mmn.mmnm()
+mmn.mmn8()
 
 print(table_designations(), '\n')
-print(tableResult())
+print(mmn.tableResult())
