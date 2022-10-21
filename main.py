@@ -77,7 +77,7 @@ if variant == 0:
         mmn.mmnm()
         mmn.mmn8()
 
-        print(table_designations(), '\n')
+        # print(table_designations(), '\n')
         print(mmn.tableResult())
     exit(2)
 
